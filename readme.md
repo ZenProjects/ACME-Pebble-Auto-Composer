@@ -14,6 +14,8 @@ Images used:
 
 Plus a python wrapper (httpreq) to challtestsrv.
 
+This is only for testing, do not use in production !
+
 To start and test:
 ```sh
 make
@@ -23,3 +25,5 @@ To clean all:
 ```sh
 make clean-all
 ```
+
+The pebble Acme server start on 0.0.0.0:14000
