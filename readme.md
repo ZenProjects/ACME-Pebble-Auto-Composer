@@ -6,7 +6,7 @@ Prerequisite: docker and docker compose plugin v2
 
 To start and test:
 ```sh
-# make
+make
 ```
 
 To clean all:
