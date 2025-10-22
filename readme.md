@@ -12,7 +12,7 @@ Images used:
 - https://github.com/go-acme/lego
   acme golang client
 
-Plus a python wrapper (httpreq) to challtestsrv.
+Plus a python wrapper ([httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html)) to challtestsrv.
 
 This is only for testing, do not use in production !
 
