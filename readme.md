@@ -11,7 +11,8 @@ Images used:
   A miniature version of Boulder, Pebble is a small ACME test server not suited for use as a production CA.
 - https://github.com/letsencrypt/challtestsrv
   Small TEST-ONLY server for mock DNS & responding to HTTP-01, DNS-01, and TLS-ALPN-01 ACME challenges.
-- Plus a python wrapper ([httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html)) to challtestsrv.
+- dns-bridge
+  A litle python wrapper ([httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html)) to challtestsrv.
 - https://github.com/go-acme/lego
   An acme golang client to test certificate generation with [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) dns provider.
 
