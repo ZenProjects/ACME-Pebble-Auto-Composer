@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+  # 1. Serveur ACME (Pebble) - Retrait du healthcheck pour simplifier
+  pebble:
+    image: ghcr.io/letsencrypt/pebble:latest
+    container_name: pebble
+    command: 
+      - -config
+      - /test/config/pebble-config.json
+      - -dnsserver
+      - challenge-server:8053
+    ports:
+      - "14000:14000"
+    volumes:
+      - ./configs/pebble-config.json:/test/config/pebble-config.json:ro
+      - ./datas/pebble-certs/acme:/etc/pebble/acme-certs:ro
+      - ./datas/pebble-certs/ca:/ca-certs
+    environment:
+      - PEBBLE_VA_ALWAYS_VALID=1
+
+  # 2. Serveur de Défis (pebble-challtestsrv) - (Inchangé)
+  challenge-server:
+    image: ghcr.io/letsencrypt/pebble-challtestsrv:latest
+    container_name: challenge-server
+    command: 
+      - -management
+      - :8055
+      - -dns01
+      - :8053 
+      - -http01
+      - :5002
+      - -tlsalpn01
+      - :5001 
+    ports:
+      - "8055:8055"
+      - "8053:8053/udp"
+      
+  # 3. Client ACME (Lego) - Utilisation du build
+  lego:
+    build:
+      context: lego
+      dockerfile: Dockerfile.lego
+      network: host
+    container_name: lego
+    volumes:
+      - ./datas/certificates:/certificates
+      - ./datas/pebble-certs/acme:/etc/pebble/acme-certs:ro
+      - ./datas/pebble-certs/ca:/ca-certs:ro
+    environment:
+      - LEGO_CA_CERTIFICATES=/etc/pebble/acme-certs/pebble.minica.pem
+      - SSL_CERT_FILE=/ca-certs/pebble.minica.pem
+      - HTTPREQ_ENDPOINT=http://dns-bridge:8056
+      - HTTPREQ_MODE=RAW
+    depends_on:
+      # Attend que Pebble soit démarré pour que le script d'entrée puisse l'interroger
+      - pebble
+      - challenge-server
+
+  dns-bridge:
+    build:
+      context: dns-bridge
+      dockerfile: Dockerfile
+      network: host
+    ports:
+      - "8056:8056"
+    environment:
+      - CHALLTESTSRV_URL=http://challenge-server:8055
+    depends_on:
+      - challenge-server

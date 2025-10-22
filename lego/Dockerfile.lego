@@ -1,0 +1,17 @@
+# Dockerfile.lego
+
+# Basé sur l'image Lego officielle
+FROM goacme/lego:latest
+
+# Installe curl pour pouvoir télécharger le certificat CA de Pebble
+# (Suppose Alpine Linux, ce qui est courant pour cette image)
+RUN apk update && apk add curl bash --no-cache
+
+# Copie un script d'entrée personnalisé
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN mkdir -p /scripts
+COPY lego_dns_solver.sh /scripts/lego_dns_solver.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /scripts/lego_dns_solver.sh
+
+# Utilise le nouveau script comme point d'entrée
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
