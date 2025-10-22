@@ -15,7 +15,7 @@ Images used:
   Small TEST-ONLY server for mock DNS & responding to HTTP-01, DNS-01, and TLS-ALPN-01 ACME challenges.
 - Dns-bridge
   
-  A litle python wrapper ([httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html)) to challtestsrv.
+  A litle python wrapper ([httpreq lego dns provider](https://go-acme.github.io/lego/dns/httpreq/index.html)) to challtestsrv.
 - https://github.com/go-acme/lego
 
   An acme golang client to test certificate generation with [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) dns provider.
