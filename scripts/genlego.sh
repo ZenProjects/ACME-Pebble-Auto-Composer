@@ -7,6 +7,9 @@ docker exec -it ${LEGO_CONTAINER} /lego --server https://anakai.ch2o.info:14000/
 	  --email "${EMAIL}" \
           --domains "${DOMAIN_NAME}" \
           --accept-tos \
+	  --eab \
+	  --kid="mon-kid-123" \
+	  --hmac="Su/QdcYdNUtXwdomlG/SLF8OVWsaUX6gxRXubUD3Esg=" \
 	  --path /certificates \
 	  --dns httpreq \
 	  --dns.propagation-disable-ans \

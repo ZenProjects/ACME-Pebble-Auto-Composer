@@ -9,7 +9,13 @@ datas/pebble-certs/acme/cert.pem:
 
 setup: datas/pebble-certs/acme/cert.pem
 
+stop: 
+	docker compose stop
+
 start: 
+	docker compose start
+
+up: 
 	docker compose up -d 
 
 restart: 
