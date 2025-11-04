@@ -2,14 +2,15 @@ set -x
 DOMAIN_NAME="test.example.com"
 LEGO_CONTAINER="lego"
 EMAIL="test@example.com"
+. $(dirname $0)/../configs/.env
 
-docker exec -it ${LEGO_CONTAINER} /lego --server https://anakai.ch2o.info:14000/dir \
+docker exec -it ${LEGO_CONTAINER} /lego --server "${PEBBLE_FQDN}/dir" \
 	  --email "${EMAIL}" \
           --domains "${DOMAIN_NAME}" \
           --accept-tos \
 	  --eab \
-	  --kid="mon-kid-123" \
-	  --hmac="Su/QdcYdNUtXwdomlG/SLF8OVWsaUX6gxRXubUD3Esg=" \
+	  --kid="${KID}" \
+	  --hmac="${KID_HMAC}" \
 	  --path /certificates \
 	  --dns httpreq \
 	  --dns.propagation-disable-ans \

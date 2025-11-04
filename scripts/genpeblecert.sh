@@ -2,10 +2,20 @@
 set -e 
 set -x
 
+PEBBLE_DIR=$(cd "$(dirname $0)/.."; echo $PWD; cd $OLDPWD)
 CERT_CN="Pebble ACME Server"
 DOMAIN=$(hostname)
 CERTS_DIR="datas/pebble-certs"
+KID="mon-kid-123"
+KID_HMAC="$(openssl rand -base64 32 | tr '+/' '-_' | tr -d '=')"
+
+cd $PEBBLE_DIR
 mkdir -p $CERTS_DIR/acme
+
+sed "s|@KID@|$KID|g; s|@KID_HMAC@|$KID_HMAC|g" configs/pebble-config.json.tpl > configs/pebble-config.json
+echo "KID=\"${KID}\"" >configs/.env
+echo "KID_HMAC=\"${KID_HMAC}\"" >>configs/.env
+echo "PEBBLE_FQDN=\"https://${DOMAIN}:14000\"" >>configs/.env
 
 echo "Génération des certificats de serveur ACME pour ${DOMAIN}..."
 

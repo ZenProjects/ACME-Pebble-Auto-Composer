@@ -35,6 +35,7 @@ services:
       - "8053:8053/udp"
       
   # 3. Client ACME (Lego) - Utilisation du build
+  # https://go-acme.github.io/lego/dns/httpreq/
   lego:
     build:
       context: lego
@@ -50,6 +51,9 @@ services:
       - SSL_CERT_FILE=/ca-certs/pebble.minica.pem
       - HTTPREQ_ENDPOINT=http://dns-bridge:8056
       - HTTPREQ_MODE=RAW
+      - LEGO_DEBUG_CLIENT_VERBOSE_ERROR=true 
+      - LEGO_DEBUG_DNS_API_HTTP_CLIENT=true 
+      - LEGO_DEBUG_ACME_HTTP_CLIENT=true 
     depends_on:
       # Attend que Pebble soit démarré pour que le script d'entrée puisse l'interroger
       - pebble

@@ -10,7 +10,7 @@
     "vaAlwaysValid": true,
     "externalAccountBindingRequired": true,
     "externalAccountMACKeys": {
-      "mon-kid-123": "Su/QdcYdNUtXwdomlG/SLF8OVWsaUX6gxRXubUD3Esg="
+      "@KID@": "@KID_HMAC@" 
     }
   }
 }
