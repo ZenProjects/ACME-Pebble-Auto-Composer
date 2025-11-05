@@ -8,6 +8,8 @@ services:
       - /test/config/pebble-config.json
       - -dnsserver
       - challenge-server:8053
+      - -strict
+      - false
     ports:
       - "14000:14000"
     volumes:
@@ -16,6 +18,7 @@ services:
       - ./datas/pebble-certs/ca:/ca-certs
     environment:
       - PEBBLE_VA_ALWAYS_VALID=1
+      - PEBBLE_VA_NOSLEEP=1
 
   # 2. Serveur de Défis (pebble-challtestsrv) - (Inchangé)
   challenge-server:
